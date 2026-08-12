@@ -22,9 +22,10 @@ npm run dev
 
 ## スクリプト
 
-| コマンド        | 説明                     |
-| --------------- | ------------------------ |
-| `npm run dev`   | 開発サーバーを起動する   |
-| `npm run build` | 本番用ビルドを作成する   |
-| `npm run start` | 本番用サーバーを起動する |
-| `npm run lint`  | ESLint で静的解析する    |
+| コマンド         | 説明                     |
+| ---------------- | ------------------------ |
+| `npm run dev`    | 開発サーバーを起動する   |
+| `npm run build`  | 本番用ビルドを作成する   |
+| `npm run start`  | 本番用サーバーを起動する |
+| `npm run lint`   | ESLint で静的解析する    |
+| `npm run format` | Prettier で整形する      |
