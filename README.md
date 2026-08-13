@@ -7,7 +7,7 @@ Next.js ベースで、メールアドレス・パスワード認証と SSO ロ�
 - **Next.js** + **TypeScript**
 - **Auth.js**: メール＆パスワード ＋ SSO
 - **Zod**: 入力バリデーション
-- **CSS Modules**: スタイリング
+- **Tailwind**: スタイリング
 
 ## はじめに
 
