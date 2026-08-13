@@ -8,5 +8,6 @@
   a:hover,
   button:hover {
     opacity: var(--opacity-hover);
+    cursor: pointer;
   }
 }
