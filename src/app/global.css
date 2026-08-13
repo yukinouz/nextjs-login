@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@theme {
+  --opacity-hover: 0.7;
+}
+
+@media (any-hover: hover) {
+  a:hover,
+  button:hover {
+    opacity: var(--opacity-hover);
+  }
+}
