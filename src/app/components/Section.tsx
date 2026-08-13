@@ -6,12 +6,6 @@ interface SectionProps {
   bottom?: boolean;
 }
 
-interface SectionProps {
-  children: React.ReactNode;
-  top?: boolean;
-  bottom?: boolean;
-}
-
 /**
  * セクション要素をラップし、上下余白の有無を制御するコンポーネント。
  *

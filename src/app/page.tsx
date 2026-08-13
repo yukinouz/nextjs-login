@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Section from "./components/section";
+import Section from "./components/Section";
 import Inner from "./components/Inner";
 
 const Home = () => {
@@ -8,7 +8,7 @@ const Home = () => {
       <Section top bottom>
         <Inner>
           <div className="space-y-6 text-center md:space-y-8">
-            <h1 className="text-2xl font-bold">Next.js Login Page</h1>
+            <h1 className="text-2xl font-bold">Next.js Login Sample</h1>
             <p className="text-gray-500">
               ログイン機能学習のための個人開発アプリです。
               <br />
