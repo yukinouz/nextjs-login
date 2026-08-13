@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import Section from "@/app/components/Section";
 import Inner from "@/app/components/Inner";
 import { LoginForm } from "@/app/components/auth/LoginForm";
 import { GoogleSignInButton } from "@/app/components/auth/GoogleSignInButton";
-import { Metadata } from "next";
+import { auth } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "ログイン | Next.js Login",
@@ -11,7 +13,17 @@ export const metadata: Metadata = {
     "ログイン画面です。メールアドレスとパスワード、または Google アカウントでログインできます。",
 };
 
-const LoginPage = () => {
+const LoginPage = async ({ searchParams }: PageProps<"/login">) => {
+  const session = await auth();
+
+  // ログイン済みならトップページにリダイレクト
+  if (session?.user) {
+    redirect("/");
+  }
+
+  const { error } = await searchParams;
+  const hasError = error === "credentials";
+
   return (
     <main>
       <Section top bottom>
@@ -25,7 +37,7 @@ const LoginPage = () => {
               </p>
             </header>
 
-            <LoginForm />
+            <LoginForm hasError={hasError} />
 
             <div className="relative" role="separator">
               <div className="absolute inset-0 flex items-center" aria-hidden>

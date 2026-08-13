@@ -1,13 +1,32 @@
+import { signInWithCredentials } from "@/lib/auth-actions";
+
+interface LoginFormProps {
+  hasError: boolean;
+}
+
+const ErrorMessage = () => {
+  return (
+    <p
+      className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700"
+      role="alert"
+    >
+      メールまたはパスワードが正しくありません
+    </p>
+  );
+};
+
 /**
- * メールアドレス・パスワードログイン用の見た目フォーム。
- * 送信処理は未接続（Phase 2 で Auth.js に接続する）。
+ * メールアドレス・パスワードログイン用フォーム。
+ * 送信時は Auth.js の Credentials プロバイダーで認証する。
  */
-export const LoginForm = () => {
+export const LoginForm = ({ hasError }: LoginFormProps) => {
   const inputClassName =
     "w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 transition focus:border-blue-700 focus:ring-2 focus:ring-blue-700/20";
 
   return (
-    <form className="space-y-5" noValidate>
+    <form action={signInWithCredentials} className="space-y-5">
+      {hasError && <ErrorMessage />}
+
       <div className="space-y-2">
         <label
           htmlFor="email"
