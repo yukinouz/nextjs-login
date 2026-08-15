@@ -22,8 +22,14 @@ const LoginPage = async ({ searchParams }: PageProps<"/login">) => {
   }
 
   const { error } = await searchParams;
-  const hasCredentialsError = error === "credentials";
-  const hasGoogleError = error === "google";
+  // searchParams の error は string | string[] になり得るため、先頭の値だけ使う
+  const errorCode = Array.isArray(error) ? error[0] : error;
+  // credentials の失敗
+  const hasCredentialsError = errorCode === "credentials";
+  // Auth.js は Google 失敗時に AccessDenied / OAuthCallback / Configuration などを返す。
+  // 対応策: credentials 以外は Google の失敗として扱う。
+  const hasGoogleError =
+    typeof errorCode === "string" && errorCode !== "credentials";
 
   return (
     <main>
