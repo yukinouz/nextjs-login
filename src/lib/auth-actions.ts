@@ -24,6 +24,23 @@ export const signInWithCredentials = async (formData: FormData) => {
 };
 
 /**
+ * Google アカウントで Auth.js のログインを行う。
+ */
+export const signInWithGoogle = async () => {
+  try {
+    await signIn("google", {
+      redirectTo: "/",
+    });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      redirect("/login?error=google");
+    }
+
+    throw error;
+  }
+};
+
+/**
  * Auth.js のセッションを破棄してトップへ戻す。
  */
 export const signOutAction = async () => {

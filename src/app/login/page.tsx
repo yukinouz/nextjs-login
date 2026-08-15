@@ -22,7 +22,14 @@ const LoginPage = async ({ searchParams }: PageProps<"/login">) => {
   }
 
   const { error } = await searchParams;
-  const hasError = error === "credentials";
+  // searchParams の error は string | string[] になり得るため、先頭の値だけ使う
+  const errorCode = Array.isArray(error) ? error[0] : error;
+  // credentials の失敗
+  const hasCredentialsError = errorCode === "credentials";
+  // Auth.js は Google 失敗時に AccessDenied / OAuthCallback / Configuration などを返す。
+  // 対応策: credentials 以外は Google の失敗として扱う。
+  const hasGoogleError =
+    typeof errorCode === "string" && errorCode !== "credentials";
 
   return (
     <main>
@@ -37,7 +44,7 @@ const LoginPage = async ({ searchParams }: PageProps<"/login">) => {
               </p>
             </header>
 
-            <LoginForm hasError={hasError} />
+            <LoginForm hasError={hasCredentialsError} />
 
             <div className="relative" role="separator">
               <div className="absolute inset-0 flex items-center" aria-hidden>
@@ -48,7 +55,7 @@ const LoginPage = async ({ searchParams }: PageProps<"/login">) => {
               </div>
             </div>
 
-            <GoogleSignInButton />
+            <GoogleSignInButton hasError={hasGoogleError} />
 
             <p className="text-center text-sm text-gray-500">
               <Link href="/" className="text-blue-700 underline">

@@ -1,19 +1,9 @@
 import { signInWithCredentials } from "@/lib/auth-actions";
+import { ErrorMessage } from "../ErrorMessage";
 
 interface LoginFormProps {
   hasError: boolean;
 }
-
-const ErrorMessage = () => {
-  return (
-    <p
-      className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700"
-      role="alert"
-    >
-      メールまたはパスワードが正しくありません
-    </p>
-  );
-};
 
 /**
  * メールアドレス・パスワードログイン用フォーム。
@@ -25,7 +15,9 @@ export const LoginForm = ({ hasError }: LoginFormProps) => {
 
   return (
     <form action={signInWithCredentials} className="space-y-5">
-      {hasError && <ErrorMessage />}
+      {hasError && (
+        <ErrorMessage text="メールまたはパスワードが正しくありません" />
+      )}
 
       <div className="space-y-2">
         <label

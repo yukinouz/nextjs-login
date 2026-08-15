@@ -5,6 +5,8 @@ declare module "next-auth" {
     user: {
       id: string;
     } & DefaultSession["user"];
+    /** ログインに使った Auth.js の provider 名（credentials / google） */
+    provider?: string;
   }
 
   interface User {
@@ -15,5 +17,6 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     id: string;
+    provider?: string;
   }
 }
