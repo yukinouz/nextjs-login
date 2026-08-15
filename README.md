@@ -11,7 +11,7 @@ Next.js ベースで、メールアドレス・パスワード認証と SSO ロ�
 
 ## はじめに
 
-`.env.example` をコピーして `.env.local` を作成し、`AUTH_SECRET` を設定します。値はリポジトリにコミットしないでください。
+`.env.example` をコピーして `.env.local` を作成し、環境変数を設定します。値はリポジトリにコミットしないでください。
 
 ```bash
 cp .env.example .env.local
@@ -19,6 +19,8 @@ npx auth secret
 ```
 
 `npx auth secret` は `.env.local` に `AUTH_SECRET` を書き込みます。手動で入れる場合は、十分に長いランダム文字列を使います。
+
+Google ログインを使う場合は、Google Cloud で発行したクライアント ID / シークレットを `AUTH_GOOGLE_ID` と `AUTH_GOOGLE_SECRET` に入れます。リダイレクト URI は `http://localhost:3000/api/auth/callback/google` です。
 
 依存関係をインストールしたあと、開発サーバーを起動します。
 
@@ -34,7 +36,7 @@ npm run dev
 | パス     | 説明                                                                 |
 | -------- | -------------------------------------------------------------------- |
 | `/`      | 未ログインならログインへ誘導。ログイン済みならメール表示とログアウト |
-| `/login` | メール／パスワードログイン（Google ボタンは見た目のみ）              |
+| `/login` | メール／パスワードログインと Google ログイン |
 
 ## デモユーザー（学習用）
 

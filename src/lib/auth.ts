@@ -1,12 +1,13 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import { verifyMockUser } from "@/lib/mock-users";
 
 /**
  * Auth.js（NextAuth）の設定と、アプリから使う認証 API。
  *
  * @property handlers `/api/auth/[...nextauth]` に渡す GET / POST ハンドラー
- * @property signIn Credentials ログインを開始する
+ * @property signIn Credentials または Google のログインを開始する
  * @property signOut セッションを破棄する
  * @property auth サーバーで現在のセッションを取得する
  */
@@ -44,20 +45,32 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return user;
       },
     }),
+    Google,
   ],
   callbacks: {
     /**
      * JWT（JSON Web Token）は、ログイン状態を Cookie に保存する署名付きデータ。
      * Credentials では DB セッションを持たないため、ここで token にユーザー id を載せる。
+     * Google ログインでは `user.id` が無い場合、JWT 標準の `sub` を id として使う。
+     * ログイン方法（credentials / google）は `account.provider` を token に残す。
      * `user` があるのはログイン成功直後のみ。
      *
      * @param token 既存の JWT
      * @param user ログイン成功直後のユーザー。それ以外は undefined
+     * @param account ログイン成功直後の provider 情報。それ以外は undefined
      * @returns Cookie に保存する JWT
      */
-    jwt: ({ token, user }) => {
+    jwt: ({ token, user, account }) => {
       if (user) {
         token.id = user.id;
+      }
+
+      if (account?.provider) {
+        token.provider = account.provider;
+      }
+
+      if (!token.id && typeof token.sub === "string") {
+        token.id = token.sub;
       }
 
       return token;
@@ -72,6 +85,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     session: ({ session, token }) => {
       if (typeof token.id === "string") {
         session.user.id = token.id;
+      }
+
+      if (typeof token.provider === "string") {
+        session.provider = token.provider;
       }
 
       return session;

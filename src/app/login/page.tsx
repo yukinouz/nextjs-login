@@ -22,7 +22,8 @@ const LoginPage = async ({ searchParams }: PageProps<"/login">) => {
   }
 
   const { error } = await searchParams;
-  const hasError = error === "credentials";
+  const hasCredentialsError = error === "credentials";
+  const hasGoogleError = error === "google";
 
   return (
     <main>
@@ -37,7 +38,7 @@ const LoginPage = async ({ searchParams }: PageProps<"/login">) => {
               </p>
             </header>
 
-            <LoginForm hasError={hasError} />
+            <LoginForm hasError={hasCredentialsError} />
 
             <div className="relative" role="separator">
               <div className="absolute inset-0 flex items-center" aria-hidden>
@@ -48,7 +49,7 @@ const LoginPage = async ({ searchParams }: PageProps<"/login">) => {
               </div>
             </div>
 
-            <GoogleSignInButton />
+            <GoogleSignInButton hasError={hasGoogleError} />
 
             <p className="text-center text-sm text-gray-500">
               <Link href="/" className="text-blue-700 underline">
